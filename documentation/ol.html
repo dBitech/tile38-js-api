@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quick Start</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="//openlayers.org/en/v6.1.1/css/ol.css" type="text/css">
+  <script src="//openlayers.org/en/v6.1.1/build/ol.js"></script>
+  <script src="//cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+  
+</head>
+<body>
+  <div id="mapid" style="width: 90%; height: 400px; align: center;"></div>
+  <div id="sb-div"><select id="layerChooserSelect" name="layerChooser"  onchange="loadMyLayer()"></select></div>
+  <script>
+    let dropdown = document.getElementById('layerChooserSelect');
+    dropdown.length = 0;
+    let defaultOption = document.createElement('option');
+    defaultOption.text = 'Choose a Key';
+    dropdown.add(defaultOption);
+    dropdown.selectedIndex = 0;
+    const url = '/v1/keys';
+    const request = new XMLHttpRequest();
+    request.open('GET', url, true);
+    request.onload = function() {
+      if (request.status === 200) {
+        const data = JSON.parse(request.responseText);
+        let option;
+        for (let i = 0; i < data.length; i++) {
+          option = document.createElement('option');
+          option.text = data[i];
+          option.value = data[i];
+          dropdown.add(option);
+        }
+      } else {
+        // Reached the server, but it returned an error
+      }   
+    }
+
+    request.onerror = function() {
+      console.error('An error occurred fetching the JSON from ' + url);
+    };
+    request.send();
+
+    const baseLayer = new ol.layer.Tile({
+      source: new ol.source.OSM()
+    });
+
+    function loadMyLayer() {
+      map.getLayers().forEach(function(layer){ 
+        if (layer.get('name')=='tile38layer') 
+        map.removeLayer(layer);
+      });
+      const lname= document.getElementById('layerChooserSelect').value;
+      console.log("lname"+lname+"boo");      
+      const myURL= '/v1/intersects/' + lname + '/{z}/{x}/{y}';
+      const tile38Layer = new ol.layer.VectorTile({
+        name: 'tile38layer',
+        source: new ol.source.VectorTile({
+          format: new ol.format.MVT(),
+          url: myURL
+//'/v1/intersects/aprs/{z}/{x}/{y}'
+        }),
+        style: function(feature) {
+          return new ol.style.Style({
+            image: new ol.style.Circle({
+              fill: new ol.style.Fill({
+                color: 'rgba(192, 105, 105, 1.0)'
+              }),
+              stroke: new ol.style.Stroke({
+                width: 1,
+                color: 'rgba(255, 105, 105, 0.3)'
+              }),
+              radius: 5
+            }),
+            text: new ol.style.Text({
+              color: '#FFFFFF',
+              fontFamily: 'Calibri,sans-serif',
+              fontSize: 12,
+              text: feature.get("id").toString(),
+              labelYOffset: -12
+            })
+          })
+        }
+      })
+      map.addLayer(tile38Layer);
+      tile38Layer.setZIndex(25);
+      tile38Layer.getSource().changed();
+      
+    }
+   const map = new ol.Map({
+     target: 'mapid',
+     layers: [baseLayer],
+     view: new ol.View({
+       center: ol.proj.fromLonLat([-119, 50]),
+       zoom: 9
+     })
+   })
+  </script>
+</body>
+</html>
