@@ -7,3 +7,5 @@ Provides an endpoint to get a list of Keys, and a MVT (Mapbox Vector Tile) tiles
 edit config/index.json to suite your needs
 
 ```npm start```
+
+a simple map viewer can be seen by visiting http://localhost:3003/ol.html
