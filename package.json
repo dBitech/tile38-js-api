@@ -9,7 +9,7 @@
   },
   "author": "Darcy Buskermolen",
   "license": "ISC",
-  "repository":
+  "repository": "https://github.com/dBitech/tile38-js-api.git",
   "dependencies": {
     "fastify": "^2.10.0",
     "fastify-autoload": "^1.0.0",
