@@ -86,6 +86,7 @@
       map.addLayer(tile38Layer);
       tile38Layer.setZIndex(25);
       tile38Layer.getSource().changed();
+      setInterval(loadMyLayer, 10000);
       
     }
    const map = new ol.Map({
