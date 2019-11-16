@@ -40,7 +40,7 @@ module.exports = function (fastify, opts, next) {
       console.error(request.params.table,"/"+request.params.z+"/"+request.params.x+"/"+request.params.y);
       let intersects = Tile38client.intersectsQuery(request.params.table).tile(request.params.x, request.params.y, request.params.z).limit(1000000);
       intersects.execute().then(results => {
-        console.dir(results.count,{depth:6});  // results is an object.
+//        console.dir(results.count,{depth:6});  // results is an object.
         if (results.count && results.count > 0)
         {
           const res = GeoJSON.parse(results.objects, {GeoJSON:'object'});

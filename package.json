@@ -19,6 +19,7 @@
     "fastify-swagger": "^2.4.0",
     "geojson": "^0.5.0",
     "geojson-vt": "^3.2.1",
+    "swagger-stats": "^0.95.11",
     "tile38": "^0.7.0",
     "vt-pbf": "^3.1.1"
   }

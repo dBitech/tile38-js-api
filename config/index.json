@@ -1,12 +1,15 @@
 {
   "server": {
-   "port": 3003,
-   "host": "0.0.0.0"
+    "port": 3003,
+    "host": "0.0.0.0",
+    "options": {
+      "logger": false
+    }
   },
   "tile38": {
     "port": "",
     "host": "localhost",
-    "debug": true
+    "debug": false
   },
   "swagger": {
     "basePath": null,
