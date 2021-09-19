@@ -1,6 +1,12 @@
+'use strict'
+
 const path = require('path');
 const config = require('./config');
 const fastify = require('fastify')();
+
+function handle (conn) {
+  conn.pipe(conn) // creates an echo server
+};
 
 // compression - add x-protobuf
 fastify.register(
@@ -27,9 +33,16 @@ fastify.register(require('fastify-static'), {
   prefix: '/',
 });
 
+
 // routes
 fastify.register(require('fastify-autoload'), {
   dir: path.join(__dirname, 'routes')
+});
+
+// web sockets
+fastify.register(require('fastify-websocket'), {
+  handle,
+  options: { maxPayload: 10485796 }
 });
 
 // Launch server

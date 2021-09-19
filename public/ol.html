@@ -52,14 +52,12 @@
         map.removeLayer(layer);
       });
       const lname= document.getElementById('layerChooserSelect').value;
-      console.log("lname"+lname+"boo");      
       const myURL= '/v1/intersects/' + lname + '/{z}/{x}/{y}';
       const tile38Layer = new ol.layer.VectorTile({
         name: 'tile38layer',
         source: new ol.source.VectorTile({
           format: new ol.format.MVT(),
           url: myURL
-//'/v1/intersects/aprs/{z}/{x}/{y}'
         }),
         style: function(feature) {
           return new ol.style.Style({
@@ -89,9 +87,28 @@
       setInterval(loadMyLayer, 10000);
       
     }
+   const coverageLayer = new ol.layer.VectorTile({
+     name: 'coverageLayer',
+     source: new ol.source.VectorTile({
+       format: new ol.format.MVT(),
+       url: '//mapper.if.hamwan.ca:3030/v1/mvt/vector/{z}/{x}/{y}?geom_column=wkb_geometry&columns=n%2Csite&filter=gain%3D27',
+     }),
+     style: function(feature) {
+       return new ol.style.Style({
+         fill: new ol.style.Fill({
+           color: 'rgba(192, 105, 105, 1.0)'
+         }),
+         stroke: new ol.style.Stroke({
+           width: 1,
+           color: 'rgba(255, 105, 105, 0.3)'
+         })
+       })
+     }
+   })
+
    const map = new ol.Map({
      target: 'mapid',
-     layers: [baseLayer],
+     layers: [baseLayer,coverageLayer],
      view: new ol.View({
        center: ol.proj.fromLonLat([-119, 50]),
        zoom: 9
