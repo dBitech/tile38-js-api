@@ -20,7 +20,7 @@
     "fastify-websocket": "^4.0.0",
     "geojson": "^0.5.0",
     "geojson-vt": "^3.2.1",
-    "npm-check-updates": "^11.8.5",
+    "npm-check-updates": "^16.7.4",
     "tile38": "^0.7.0",
     "vt-pbf": "^3.1.3"
   }
