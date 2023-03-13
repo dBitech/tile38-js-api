@@ -21,7 +21,7 @@
     "geojson": "^0.5.0",
     "geojson-vt": "^3.2.1",
     "npm-check-updates": "^11.8.5",
-    "tile38": "^0.7.0",
+    "tile38": "^0.9.4",
     "vt-pbf": "^3.1.3"
   }
 }
